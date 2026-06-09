@@ -268,7 +268,7 @@ async function verifyToken() {
     }
 
     // OK → スクラッチ画面へ（まだ使用済みにしない）
-    showScratch(data.win);
+    showScratch(data.win, data.prize);
 
   } catch(e) {
     // GASに繋がらない場合（オフライン等）はlocalStorageで代替
@@ -279,7 +279,7 @@ async function verifyToken() {
 // ============================================================
 //  スクラッチ画面を表示
 // ============================================================
-function showScratch(isWin) {
+function showScratch(isWin, prizeName) {
   switchScreen('scratch');
 
   const back  = document.getElementById('scratch-back');
@@ -292,16 +292,17 @@ function showScratch(isWin) {
   label.textContent  = isWin ? '当たり！' : 'ハズレ';
   label.classList.add(isWin ? 'win' : '');
   detail.textContent = isWin
-    ? PRIZE_NAME + '\n次回ご来店時にスタッフへ'
+    ? (prizeName || '') + '
+次回ご来店時にスタッフへ'
     : 'またのご来店をお待ちしています';
 
-  initScratch(isWin);
+  initScratch(isWin, prizeName);
 }
 
 // ============================================================
 //  スクラッチロジック
 // ============================================================
-function initScratch(isWin) {
+function initScratch(isWin, prizeName) {
   const canvas = document.getElementById('scratch');
   const ctx = canvas.getContext('2d');
 
@@ -358,7 +359,7 @@ function initScratch(isWin) {
       ctx.clearRect(0, 0, 280, 280);
       canvas.style.pointerEvents = 'none';
       document.getElementById('scratch-hint').style.display = 'none';
-      markAsUsed(isWin);
+      markAsUsed(isWin, prizeName);
     }
   }
 
@@ -373,9 +374,9 @@ function initScratch(isWin) {
 // ============================================================
 //  結果確定 → GASに使用済みを通知
 // ============================================================
-async function markAsUsed(isWin) {
+async function markAsUsed(isWin, prizeName) {
   // 結果カードを先に表示（体感速度向上）
-  showResultCard(isWin);
+  showResultCard(isWin, prizeName);
 
   try {
     await fetch(GAS_API_URL + '?token=' + token + '&action=use', { method: 'GET' });
@@ -390,13 +391,13 @@ async function markAsUsed(isWin) {
 // ============================================================
 //  結果カードを表示
 // ============================================================
-function showResultCard(isWin) {
+function showResultCard(isWin, prizeName) {
   const area = document.getElementById('result-card-area');
   if (isWin) {
     area.innerHTML = `
       <div class="result-card win">
         <div style="font-size:13px;font-weight:700;color:var(--win)">🎁 おめでとうございます！</div>
-        <div class="prize-name">${PRIZE_NAME}</div>
+        <div class="prize-name">${prizeName || ''}</div>
         <div class="prize-note">
           次回ご来店時にこの画面をスタッフへご提示ください。<br>
           ※ お一人様1回限り・本人確認あり
@@ -425,8 +426,9 @@ function fallbackCheck() {
     return;
   }
   // オフライン時は確率でローカル判定（暫定）
-  const isWin = Math.random() < 0.05;
-  showScratch(isWin);
+  const isWin = Math.random() < 0.01;
+  showScratch(isWin, isWin ? 'A034｜ぱんぱんパンケーキ' : null);
+  // handled above
 }
 
 // ============================================================
