@@ -5,184 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>あぷろ チャンスくじ</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-
-  :root {
-    --red: #C8102E;
-    --gold: #D4A017;
-    --dark: #1a1a1a;
-    --win: #2ecc71;
-    --bg: #f7f4f0;
-    --muted: #999;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--bg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 16px 48px;
-  }
-
-  /* ===== HEADER ===== */
-  .header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  .store-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .store-name {
-    font-size: 13px;
-    font-weight: 900;
-    color: var(--red);
-    letter-spacing: 0.1em;
-  }
-  .lottery-heading {
-    font-size: 30px;
-    font-weight: 900;
-    color: var(--dark);
-    line-height: 1.25;
-    margin-top: 12px;
-  }
-  .lottery-heading em {
-    font-style: normal;
-    color: var(--red);
-  }
-
-  /* ===== SCREENS ===== */
-  .screen { display: none; width: 100%; max-width: 360px; text-align: center; }
-  .screen.active { display: block; }
-
-  /* Loading */
-  .loading-icon { font-size: 48px; margin-bottom: 16px; animation: spin 1.2s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { font-size: 14px; color: var(--muted); }
-
-  /* Error */
-  .error-icon { font-size: 56px; margin-bottom: 16px; }
-  .error-title { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
-  .error-sub { font-size: 14px; color: var(--muted); line-height: 1.7; }
-
-  /* Scratch */
-  .scratch-container {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 0 auto 24px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  }
-
-  .scratch-back {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-  }
-  .scratch-back.win {
-    background: linear-gradient(145deg, #d4f5e4, #a8edcc);
-  }
-  .scratch-back.lose {
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-  }
-  .result-emoji { font-size: 64px; margin-bottom: 8px; }
-  .result-label {
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-  .result-label.win { color: var(--win); }
-  .result-detail {
-    font-size: 12px;
-    color: #666;
-    padding: 0 20px;
-    line-height: 1.5;
-  }
-
-  canvas#scratch {
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    cursor: crosshair;
-    touch-action: none;
-  }
-
-  .scratch-hint {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 24px;
-    animation: blink 1.8s ease-in-out infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  /* Result card */
-  .result-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px;
-    margin-top: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  }
-  .result-card.win { border-top: 4px solid var(--win); }
-  .result-card.lose { border-top: 4px solid #ddd; }
-
-  .prize-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--dark);
-    margin: 8px 0 4px;
-  }
-  .prize-note {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .verified-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #e8f8f0;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--win);
-    margin-top: 14px;
-  }
-
-  /* Lose card */
-  .lose-msg {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-  .lose-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-  /* footer */
-  .footer {
-    margin-top: 32px;
-    font-size: 11px;
-    color: #ccc;
-    text-align: center;
-    line-height: 1.8;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+:root {
+  --red: #C8102E;
+  --gold: #D4A017;
+  --dark: #1a1a1a;
+  --win: #2ecc71;
+  --bg: #f7f4f0;
+  --muted: #999;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 48px;
+}
+.header { text-align: center; margin-bottom: 32px; }
+.store-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 6px; }
+.store-name { font-size: 13px; font-weight: 900; color: var(--red); letter-spacing: 0.1em; }
+.lottery-heading { font-size: 30px; font-weight: 900; color: var(--dark); line-height: 1.25; margin-top: 12px; }
+.lottery-heading em { font-style: normal; color: var(--red); }
+.screen { display: none; width: 100%; max-width: 360px; text-align: center; }
+.screen.active { display: block; }
+.loading-icon { font-size: 48px; margin-bottom: 16px; }
+.loading-text { font-size: 14px; color: var(--muted); }
+.error-icon { font-size: 56px; margin-bottom: 16px; }
+.error-title { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+.error-sub { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.scratch-container {
+  position: relative; width: 280px; height: 280px;
+  margin: 0 auto 24px; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.scratch-back {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; border-radius: 20px;
+}
+.scratch-back.win { background: linear-gradient(145deg, #d4f5e4, #a8edcc); }
+.scratch-back.lose { background: linear-gradient(145deg, #f0f0f0, #e0e0e0); }
+.result-emoji { font-size: 64px; margin-bottom: 8px; }
+.result-label { font-size: 26px; font-weight: 900; color: var(--dark); margin-bottom: 6px; }
+.result-label.win { color: var(--win); }
+.result-detail { font-size: 12px; color: #666; padding: 0 20px; line-height: 1.5; }
+canvas#scratch {
+  position: absolute; inset: 0; border-radius: 20px;
+  cursor: crosshair; touch-action: none;
+}
+.scratch-hint { font-size: 13px; color: var(--muted); margin-bottom: 24px; animation: blink 1.8s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.result-card { background: #fff; border-radius: 16px; padding: 24px; margin-top: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.result-card.win { border-top: 4px solid var(--win); }
+.result-card.lose { border-top: 4px solid #ddd; }
+.prize-name { font-size: 16px; font-weight: 700; color: var(--dark); margin: 8px 0 4px; }
+.prize-note { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.verified-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #e8f8f0; border-radius: 20px; padding: 6px 14px;
+  font-size: 12px; font-weight: 700; color: var(--win); margin-top: 14px;
+}
+.lose-msg { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.lose-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.footer { margin-top: 32px; font-size: 11px; color: #ccc; text-align: center; line-height: 1.8; }
 </style>
 </head>
 <body>
@@ -190,23 +79,20 @@
 <div class="header">
   <div class="store-eyebrow">CAMPAIGN</div>
   <div class="store-name">小さな韓国 あぷろ</div>
-  <div class="lottery-heading">チャンス<em>くじ</em>🎰</div>
+  <div class="lottery-heading">チャンス<em>くじ</em></div>
 </div>
 
-<!-- ローディング -->
 <div class="screen active" id="screen-loading">
   <div class="loading-icon">🎰</div>
   <div class="loading-text">確認中...</div>
 </div>
 
-<!-- エラー -->
 <div class="screen" id="screen-error">
   <div class="error-icon" id="err-icon">⚠️</div>
   <div class="error-title" id="err-title">このURLは無効です</div>
   <div class="error-sub" id="err-sub">スタッフにお声がけください</div>
 </div>
 
-<!-- スクラッチ -->
 <div class="screen" id="screen-scratch">
   <div class="scratch-container">
     <div class="scratch-back" id="scratch-back">
@@ -216,7 +102,7 @@
     </div>
     <canvas id="scratch" width="280" height="280"></canvas>
   </div>
-  <div class="scratch-hint" id="scratch-hint">👆 指でこすって結果を見よう！</div>
+  <div class="scratch-hint" id="scratch-hint">指でこすって結果を見よう！</div>
   <div id="result-card-area"></div>
 </div>
 
@@ -226,122 +112,85 @@
 </div>
 
 <script>
-// ============================================================
-//  ▼▼▼ ここだけ変更 ▼▼▼
-//  GAS WebApp の URL（デプロイ後にコピーして貼り付け）
-// ============================================================
-const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbyjVzeKusZu4fT59ux4zKuNEDIgPTs4-KlecFNUGtvthw7KmfWZGgN7xwimnf9_fjsb/exec';
-const PRIZE_NAME  = 'メロジョイ A034（ぱんぱんパンケーキ）';
-// ▲▲▲ ここまで ▲▲▲
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbyjVzeKusZu4fT59ux4zKuNEDIgPTs4-KlecFNUGtvthw7KmfWZGgN7xwimnf9_fjsb/exec';
 
+var params = new URLSearchParams(location.search);
+var token = params.get('t');
 
-// ============================================================
-//  起動
-// ============================================================
-const params = new URLSearchParams(location.search);
-const token  = params.get('t');
-
-window.addEventListener('DOMContentLoaded', () => {
+window.onload = function() {
   if (!token) {
     showError('⚠️', 'URLが正しくありません', 'QRコードを読み直してください');
     return;
   }
   verifyToken();
-});
+};
 
-// ============================================================
-//  トークン照合（GAS API）
-// ============================================================
-async function verifyToken() {
-  try {
-    // まず valid チェック（使用済みにしない）
-    const res = await fetch(GAS_API_URL + '?token=' + token + '&action=check', { method: 'GET' });
-    const data = await res.json();
-
-    if (data.error === 'invalid') {
-      showError('🚫', 'このURLは無効です', 'スタッフにお声がけください');
-      return;
-    }
-    if (data.error === 'used') {
-      showError('✅', 'このURLは使用済みです', '同じURLは1回のみ有効です\nスタッフにお声がけください');
-      return;
-    }
-
-    // OK → スクラッチ画面へ（まだ使用済みにしない）
-    showScratch(data.win, data.prize);
-
-  } catch(e) {
-    // GASに繋がらない場合（オフライン等）はlocalStorageで代替
-    fallbackCheck();
-  }
+function verifyToken() {
+  var url = GAS_URL + '?token=' + token + '&action=check';
+  fetch(url)
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.error === 'invalid') {
+        showError('🚫', 'このURLは無効です', 'スタッフにお声がけください');
+      } else if (data.error === 'used') {
+        showError('✅', 'このURLは使用済みです', '同じURLは1回のみ有効です');
+      } else {
+        showScratch(data.win, data.prize);
+      }
+    })
+    .catch(function() {
+      showError('⚠️', '通信エラーが発生しました', 'もう一度試すか、スタッフにお声がけください');
+    });
 }
 
-// ============================================================
-//  スクラッチ画面を表示
-// ============================================================
 function showScratch(isWin, prizeName) {
   switchScreen('scratch');
-
-  const back  = document.getElementById('scratch-back');
-  const emoji = document.getElementById('res-emoji');
-  const label = document.getElementById('res-label');
-  const detail= document.getElementById('res-detail');
-
+  var back  = document.getElementById('scratch-back');
+  var emoji = document.getElementById('res-emoji');
+  var label = document.getElementById('res-label');
+  var detail = document.getElementById('res-detail');
   back.classList.add(isWin ? 'win' : 'lose');
-  emoji.textContent  = isWin ? '🎉' : '😊';
-  label.textContent  = isWin ? '当たり！' : 'ハズレ';
-  label.classList.add(isWin ? 'win' : '');
-  detail.textContent = isWin
-    ? (prizeName || '') + '
-次回ご来店時にスタッフへ'
-    : 'またのご来店をお待ちしています';
-
+  emoji.textContent = isWin ? '🎉' : '😊';
+  label.textContent = isWin ? '当たり！' : 'ハズレ';
+  if (isWin) label.classList.add('win');
+  detail.textContent = isWin ? (prizeName + ' 次回ご来店時にスタッフへ') : 'またのご来店をお待ちしています';
   initScratch(isWin, prizeName);
 }
 
-// ============================================================
-//  スクラッチロジック
-// ============================================================
 function initScratch(isWin, prizeName) {
-  const canvas = document.getElementById('scratch');
-  const ctx = canvas.getContext('2d');
-
-  // スクラッチ面を描画
-  const grad = ctx.createLinearGradient(0, 0, 280, 280);
+  var canvas = document.getElementById('scratch');
+  var ctx = canvas.getContext('2d');
+  var grad = ctx.createLinearGradient(0, 0, 280, 280);
   grad.addColorStop(0, '#b71c1c');
   grad.addColorStop(1, '#880e0e');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 280, 280);
-
-  // ドットパターン
   ctx.fillStyle = 'rgba(255,255,255,0.06)';
-  for (let x = 0; x < 280; x += 14) {
-    for (let y = 0; y < 280; y += 14) {
+  for (var x = 0; x < 280; x += 14) {
+    for (var y = 0; y < 280; y += 14) {
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
       ctx.fill();
     }
   }
-
-  // テキスト
   ctx.fillStyle = 'rgba(255,255,255,0.9)';
-  ctx.font = 'bold 15px Noto Sans JP, sans-serif';
+  ctx.font = 'bold 15px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('🪙 ゴシゴシこすってね', 140, 128);
-  ctx.font = '13px Noto Sans JP, sans-serif';
+  ctx.fillText('ゴシゴシこすってね', 140, 128);
+  ctx.font = '13px sans-serif';
   ctx.fillStyle = 'rgba(255,255,255,0.6)';
   ctx.fillText('指やコインで削ってください', 140, 158);
 
-  let isDrawing = false;
-  let used = false;
+  var isDrawing = false;
+  var used = false;
 
   function getPos(e) {
-    const r = canvas.getBoundingClientRect();
-    const src = e.touches ? e.touches[0] : e;
+    var r = canvas.getBoundingClientRect();
+    var src = e.touches ? e.touches[0] : e;
     return { x: src.clientX - r.left, y: src.clientY - r.top };
   }
 
-  function scratch(x, y) {
+  function doScratch(x, y) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, 26, 0, Math.PI * 2);
@@ -351,9 +200,11 @@ function initScratch(isWin, prizeName) {
 
   function checkReveal() {
     if (used) return;
-    const d = ctx.getImageData(0, 0, 280, 280).data;
-    let transparent = 0;
-    for (let i = 3; i < d.length; i += 4) if (d[i] < 64) transparent++;
+    var d = ctx.getImageData(0, 0, 280, 280).data;
+    var transparent = 0;
+    for (var i = 3; i < d.length; i += 4) {
+      if (d[i] < 64) transparent++;
+    }
     if (transparent / (280 * 280) > 0.55) {
       used = true;
       ctx.clearRect(0, 0, 280, 280);
@@ -363,79 +214,41 @@ function initScratch(isWin, prizeName) {
     }
   }
 
-  canvas.addEventListener('mousedown',  e => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); });
-  canvas.addEventListener('mousemove',  e => { if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } });
-  canvas.addEventListener('mouseup',    () => isDrawing = false);
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true;  const p = getPos(e); scratch(p.x, p.y); }, { passive: false });
-  canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } }, { passive: false });
-  canvas.addEventListener('touchend',   () => isDrawing = false);
+  canvas.addEventListener('mousedown',  function(e) { isDrawing = true; var p = getPos(e); doScratch(p.x, p.y); });
+  canvas.addEventListener('mousemove',  function(e) { if (isDrawing) { var p = getPos(e); doScratch(p.x, p.y); } });
+  canvas.addEventListener('mouseup',    function() { isDrawing = false; });
+  canvas.addEventListener('touchstart', function(e) { e.preventDefault(); isDrawing = true; var p = getPos(e); doScratch(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove',  function(e) { e.preventDefault(); if (isDrawing) { var p = getPos(e); doScratch(p.x, p.y); } }, { passive: false });
+  canvas.addEventListener('touchend',   function() { isDrawing = false; });
 }
 
-// ============================================================
-//  結果確定 → GASに使用済みを通知
-// ============================================================
-async function markAsUsed(isWin, prizeName) {
-  // 結果カードを先に表示（体感速度向上）
+function markAsUsed(isWin, prizeName) {
   showResultCard(isWin, prizeName);
-
-  try {
-    await fetch(GAS_API_URL + '?token=' + token + '&action=use', { method: 'GET' });
-  } catch(e) {
-    // 失敗してもlocalStorageで記録
-    const used = JSON.parse(localStorage.getItem('apro_used') || '{}');
-    used[token] = { win: isWin, at: new Date().toISOString() };
-    localStorage.setItem('apro_used', JSON.stringify(used));
-  }
+  fetch(GAS_URL + '?token=' + token + '&action=use').catch(function() {});
 }
 
-// ============================================================
-//  結果カードを表示
-// ============================================================
 function showResultCard(isWin, prizeName) {
-  const area = document.getElementById('result-card-area');
+  var area = document.getElementById('result-card-area');
   if (isWin) {
-    area.innerHTML = `
-      <div class="result-card win">
-        <div style="font-size:13px;font-weight:700;color:var(--win)">🎁 おめでとうございます！</div>
-        <div class="prize-name">${prizeName || ''}</div>
-        <div class="prize-note">
-          次回ご来店時にこの画面をスタッフへご提示ください。<br>
-          ※ お一人様1回限り・本人確認あり
-        </div>
-        <div class="verified-badge">✅ 使用済み処理完了・不正防止済み</div>
-      </div>`;
+    area.innerHTML =
+      '<div class="result-card win">' +
+        '<div style="font-size:13px;font-weight:700;color:var(--win)">おめでとうございます！</div>' +
+        '<div class="prize-name">' + (prizeName || '') + '</div>' +
+        '<div class="prize-note">次回ご来店時にこの画面をスタッフへご提示ください。<br>お一人様1回限り・本人確認あり</div>' +
+        '<div class="verified-badge">✅ 使用済み処理完了</div>' +
+      '</div>';
   } else {
-    area.innerHTML = `
-      <div class="result-card lose">
-        <div class="lose-msg">😊 残念、ハズレでした</div>
-        <div class="lose-sub">
-          またのご来店をお待ちしています！<br>
-          次回もレシート＋SNS投稿でチャレンジできます。
-        </div>
-      </div>`;
+    area.innerHTML =
+      '<div class="result-card lose">' +
+        '<div class="lose-msg">残念、ハズレでした</div>' +
+        '<div class="lose-sub">またのご来店をお待ちしています！<br>次回もレシート＋SNS投稿でチャレンジできます。</div>' +
+      '</div>';
   }
 }
 
-// ============================================================
-//  オフライン時フォールバック（localStorage照合）
-// ============================================================
-function fallbackCheck() {
-  const used = JSON.parse(localStorage.getItem('apro_used') || '{}');
-  if (used[token]) {
-    showError('✅', 'このURLは使用済みです', '同じURLは1回のみ有効です');
-    return;
-  }
-  // オフライン時は確率でローカル判定（暫定）
-  const isWin = Math.random() < 0.01;
-  showScratch(isWin, isWin ? 'A034｜ぱんぱんパンケーキ' : null);
-  // handled above
-}
-
-// ============================================================
-//  ユーティリティ
-// ============================================================
 function switchScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
   document.getElementById('screen-' + id).classList.add('active');
 }
 
